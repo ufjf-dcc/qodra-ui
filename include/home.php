@@ -63,7 +63,7 @@ if (!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])) {
             <h2>".$_SESSION['user_name']."</h2>
             <div class=\"account__actions\">
               <a href=\"".$siteurl."editar-conta.php\">Minha conta</a>
-              <a href=\"".$siteurl."?action=logout\">Sair</a>
+              <a href=\"".$siteurl."index.php/?action=logout\">Sair</a>
             </div>";
 ?>
 </div>
