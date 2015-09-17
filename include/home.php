@@ -29,14 +29,14 @@ function verifyLike($id) {
           <div class="wrap">
     <nav class="header__menu">
               <ul>
-        <li><a href="<?php echo $siteurl ?>">Início</a></li>
+        <li><a href="<?php echo $siteurl."index.php" ?>">Início</a></li>
         <li><a href="#universidades">Universidades</a></li>
         <li><a href="#videos">Vídeos</a></li>
         <li><a href="#professores">Professores</a></li>
         <li><a href="#sobre">Sobre</a></li>
       </ul>
             </nav>
-        <a href="<?php echo $siteurl ?>"><h1 class="logo header__logo">Qodra.</h1></a>
+        <a href="<?php echo $siteurl."index.php" ?>"><h1 class="logo header__logo">Qodra.</h1></a>
     <div class="account">
 <?php 
 if (!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])) {
