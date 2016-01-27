@@ -5,6 +5,8 @@
 	} else $pag = $_GET["pag"];
 	include "include/busca.php";
 	include "include/db.php";
+    include "include/inicialNEW.php";
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -37,7 +39,7 @@
         
         <section class="videos">
        <?php
-		if ($countvid == 0) {
+        if ($countvid == 0) {
          	echo "<h1 class=\"title-main\">Não foram encontrados resultados para \"". $busca . "\"</h1>";	
 		} else { 
 			echo "
@@ -47,9 +49,10 @@
 				for ($x = 0; $x <= 8; $x++) {
 					$sql = mysql_query("select id from tbl_videos where video = '".$links[$pag*9-9+1+$x]."' limit 1");
 					$id = mysql_fetch_object($sql);
-			  		echo "<article>
+                    $auxiliar = $links[$pag*9-9+1+$x];
+                    echo "<article>
             		<span class='videos__fav icon-star-black'></span>
-              		<video poster='fake-content/video-poster.jpg' autoplay loop controls tabindex='0'></video>
+              		<video height='180px' width='340px' poster='geraImagem.php?action=". $auxiliar ."' autoplay loop controls tabindex='0'></video>
               		<a class=\"videos__title\" href=\"detalhe-video.php?v=" . $links[$pag*9-9+1+$x] . "\">" . $titulos[$pag*9-9+1+$x] . "</a>
               		<a class=\"videos__like fnc_".$id->id."\""; 
 					if(isset($_SESSION['user_id'])) {
@@ -65,9 +68,10 @@
 		  		}
 			} else {
 				for ($x = 0; $x <= $countvid-($numpaginas-1)*9-1; $x++) {
+                    $auxiliar = $links[($numpaginas-1)*9+$x];
 			  		echo "<article>
             		<span class='videos__fav icon-star-black'></span>
-              		<video poster='fake-content/video-poster.jpg' autoplay loop controls tabindex='0'></video>
+              		<video height='180px' width='350px' poster='geraImagem.php?action=". $auxiliar ."' autoplay loop controls tabindex='0'></video>
               		<a class=\"videos__title\" href=\"detalhe-video.php?v=" . $links[($numpaginas-1)*9+$x] . "\">" . $titulos[($numpaginas-1)*9+$x] . "</a>
               		<a class=\"videos__like\" href='#gostei' class='link-icon'><span class='icon-like-white'></span> <span class='link-icon__text'>".countLikes($links[($numpaginas-1)*9+$x])."</span></a>
      				<a class=\"videos__like\" href=\"detalhe-video.php?v=" . $links[($numpaginas-1)*9+$x] . "#comentar\" class='link-icon'><span class='icon-comment-white'></span> <span class='link-icon__text'>".countCommentaries($links[($numpaginas-1)*9+$x])."</span></a>
@@ -100,58 +104,22 @@
           <div class="column-8-12">
             <section class="main-categories group">
               <div class="title-sec">
-                <h1>Principais categorias</h1> <a href="#ver-todas">Ver todas</a>
-              </div>
+                <h1>Principais categorias</h1>
+                <a href="#ver-todas">Ver todas</a> </div>
               <div class="categorie-list">
-                <h2 class="categorie-list__title">Ciências Naturais</h2>
                 <ul class="categorie-list__list">
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
+                  <?php
+                  for( $i=0; $i<10; $i++){
+                    echo'
+                        <li><a href="'.$siteurl.'lista-video.php?busca='.$principaisCategorias[$i].'" method="get" >'.$principaisCategorias[$i].'</a> <span>'.$principaisCategoriasQtd[$i].'</span></li>
+                      ';
+
+                  }
+
+                  ?>
                 </ul>
               </div>
-              <div class="categorie-list">
-                <h2 class="categorie-list__title">Ciências Naturais</h2>
-                <ul class="categorie-list__list">
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                </ul>
-              </div>
-              <div class="categorie-list">
-                <h2 class="categorie-list__title">Ciências Naturais</h2>
-                <ul class="categorie-list__list">
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                </ul>
-              </div>
-              <div class="categorie-list">
-                <h2 class="categorie-list__title">Ciências Naturais</h2>
-                <ul class="categorie-list__list">
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                </ul>
-              </div>
-              <div class="categorie-list">
-                <h2 class="categorie-list__title">Ciências Naturais</h2>
-                <ul class="categorie-list__list">
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                </ul>
-              </div>
+
             </section>
           </div>
           <div class="column-4-12">
@@ -160,14 +128,11 @@
                 <h1>Tags mais usadas</h1> <a href="#ver-todas">Ver todas</a>
               </div>
               <ul class="main-tags__list">
-                <li class="main-tags__tag1"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag2"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag3"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag4"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag5"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag6"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag7"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag8"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
+                <?php
+                for ($x = 0; $x <= 7; $x++) {
+                  echo "<li class=\"main-tags__tag" . ($x + 1) . "\"><a href=\"lista-video.php?busca=" . $Dtagsmaisusadas[$x] . "\">" . $Dtagsmaisusadas[$x] . "</a> <span>" . $Dtagsmaisusadasquant[$x] . " vídeos</span></li>";
+                }
+                ?>
               </ul>
             </section>
           </div>

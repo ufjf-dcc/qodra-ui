@@ -1,7 +1,7 @@
 <?php 
 include "db.php";
 //$pasta = "C:/xampp/htdocs/qodra/images/photos/";
-$pasta = "/var/www/html/qodra/images/photos/";
+$pasta = "/var/www/html/qodra-ui/images/photos/";
 $permitidos = array(".jpg",".jpeg",".gif",".png", ".bmp"); 
 if(isset($_POST) || $_FILES['imagem']['name'] == NULL){ 
 	$nome_imagem = $_FILES['imagem']['name']; 

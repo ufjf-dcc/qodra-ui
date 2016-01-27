@@ -2,6 +2,7 @@
 	$v = $_GET["v"];
 	include "include/detalhe.php";
 	include "include/db.php";
+    include "include/inicialNEW.php";
 	function formataData($data) {
 		$ex = explode(' ',$data);
 		$time = explode(':',$ex[1]);
@@ -15,6 +16,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Qodra</title>
@@ -51,9 +53,9 @@
               </ul>
             </div>
           </div>
-          <div class="column-11-12">
+          <div class="column-7-12">
             <div class="video-frame">
-              <video controls autoplay name="media" id="video"><source src="<?php echo $vidurl ?>" type="video/mp4"></video>
+              <video controls autoplay=off name="media" id="video"><source src="<?php echo $vidurl ?>" type="video/mp4"></video>
             </div>
             <div class="video-likes"><h1 class="video-title"> <?php echo $titulo ?><span class="video-subtitle"> Em <?php echo $curso ?></span></h1>
 			<?php   
@@ -119,64 +121,79 @@
 			 ?>
             </div>
           </div>
+          <!-- EM EDICAO  -->
+         <div class="column-4-12" >
+
+              <?php
+              $login = "root:abc123";
+              $format = "application/sparql-results+json";
+              $endereco = " select ?relacionados ?nome_relacionado { <".$v."> <dcterms:relatedto> ?relacionados .
+                                                                ?relacionados <dcterms:title> ?nome_relacionado
+                                                                }
+                          ";
+
+              $url = urlencode($endereco);
+              $sparqlURL = 'http://localhost:10035/repositories/qodra_teste?query='.$url;//.'+limit+3';
+              $curl = curl_init();
+
+              //definimos a URL a ser usada
+              curl_setopt($curl, CURLOPT_URL, $sparqlURL);
+
+              curl_setopt($curl, CURLOPT_USERPWD, $GLOBALS['login']);
+
+              // define que o conteúdo obtido deve ser retornado em vez de exibido
+              curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); //Recebe o output da url como uma string
+
+
+              curl_setopt($curl,CURLOPT_HTTPHEADER,array("Accept: ".$format ));
+              $resposta = curl_exec( $curl );
+              curl_close($curl);
+              $jsonobj = json_decode($resposta);
+              if ( strlen($resposta) > 120) {
+               echo '
+
+                     <center><h1 style=color:"#2ECC71"><b>Vídeos Relacionados</b></h1></center><br />
+                     <div style=" height: 470px; width: 400px; overflow:scroll">
+               ';
+               foreach($jsonobj->results->bindings as $data) {
+                 echo '
+
+                        <div class="video-frame">
+                          <video width="170px"  poster="geraImagem.php?action=' . $data->relacionados->value . ' " autoplay="autoplay" loop="loop" controls="controls"  ></video>
+                        </div>
+                        <a  class="videos__link" href="detalhe-video.php?v=' . $data->relacionados->value . ' " ><justify> ' . $data->nome_relacionado->value . ' </justify></a>
+                        <hr>
+
+                 ';
+               }
+              }
+              ?>
+
+           </div>
+          </div>
+          <!-- FIM EDICAO  -->
         </div>
         
         <div class="group">
           <div class="column-8-12">
             <section class="main-categories group">
               <div class="title-sec">
-                <h1>Principais categorias</h1> <a href="#ver-todas">Ver todas</a>
-              </div>
+                <h1>Principais categorias</h1>
+                <a href="#ver-todas">Ver todas</a> </div>
               <div class="categorie-list">
-                <h2 class="categorie-list__title">Ciências Naturais</h2>
                 <ul class="categorie-list__list">
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
+                  <?php
+                  for( $i=0; $i<10; $i++){
+                    echo'
+                        <li><a href="'.$siteurl.'lista-video.php?busca='.$principaisCategorias[$i].'" method="get" >'.$principaisCategorias[$i].'</a> <span>'.$principaisCategoriasQtd[$i].'</span></li>
+                      ';
+
+                  }
+
+                  ?>
                 </ul>
               </div>
-              <div class="categorie-list">
-                <h2 class="categorie-list__title">Ciências Naturais</h2>
-                <ul class="categorie-list__list">
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                </ul>
-              </div>
-              <div class="categorie-list">
-                <h2 class="categorie-list__title">Ciências Naturais</h2>
-                <ul class="categorie-list__list">
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                </ul>
-              </div>
-              <div class="categorie-list">
-                <h2 class="categorie-list__title">Ciências Naturais</h2>
-                <ul class="categorie-list__list">
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                </ul>
-              </div>
-              <div class="categorie-list">
-                <h2 class="categorie-list__title">Ciências Naturais</h2>
-                <ul class="categorie-list__list">
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                  <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                </ul>
-              </div>
+
             </section>
           </div>
           <div class="column-4-12">
@@ -185,14 +202,11 @@
                 <h1>Tags mais usadas</h1> <a href="#ver-todas">Ver todas</a>
               </div>
               <ul class="main-tags__list">
-                <li class="main-tags__tag1"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag2"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag3"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag4"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag5"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag6"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag7"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                <li class="main-tags__tag8"><a href="#">Astronomia</a> <span>7 vídeos</span></li>
+                <?php
+                for ($x = 0; $x <= 7; $x++) {
+                  echo "<li class=\"main-tags__tag". ($x+1) ."\"><a href=\"lista-video.php?busca=" . $principaisCategoriasVideo[$x] . "\">" . $principaisCategoriasVideo[$x] . "</a> <span>" . $principaisCategoriasQtdVideo[$x] . " vídeos</span></li>";
+                }
+                ?>
               </ul>
             </section>
           </div>

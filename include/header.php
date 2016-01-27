@@ -27,7 +27,7 @@ function verifyLike($id) {
 ?>
 <header id="fixed-header" class="header fixed">
       <div class="wrap">
-        <a href="<?php echo $siteurl."index.php" ?>"><h1 class="logo header__logo">Qodra.</h1></a>
+        <a href="<?php echo $siteurl ?>index.php"><h1 class="logo header__logo">Qodra.</h1></a>
         
         <form class="search-header form-search" action="lista-video.php">
           <input type="search" name="busca" id="busca" placeholder="álgebra, sódio, adamantium..." /> <input type="submit" value="Buscar" />
@@ -36,7 +36,7 @@ function verifyLike($id) {
         <nav id="menu-inst" class="menu-iconized">
           <a href="#menu" id="show-menu-inst" class="menu-iconized__icon"><span class="icon-menu"></span> <span class="text">Menu</span></a>
           <ul id="menu-inst-menu" class="menu-iconized__submenu">
-            <li><a href="<?php echo $siteurl."index.php" ?>">Início</a></li>
+            <li><a href="<?php echo $siteurl ?>index.php">Início</a></li>
             <li><a href="#universidades">Universidades</a></li>
             <li><a href="#videos">Vídeos</a></li>
             <li><a href="#professores">Professores</a></li>
@@ -59,7 +59,7 @@ function verifyLike($id) {
 			  <h2>".$_SESSION['user_name']."</h2>
 			  <div class=\"account__actions\">
               <a href=\"".$siteurl."editar-conta.php\">Minha conta</a>
-			  <a href=\"".$siteurl."index.php/?action=logout\">Sair</a>
+			  <a href=\"".$siteurl."index.php?action=logout\">Sair</a>
 			  </div>";
 ?>
         </div>
@@ -70,7 +70,7 @@ function verifyLike($id) {
       <div class="wrap">
         <nav class="header__menu">
           <ul>
-            <li><a href="<?php echo $siteurl."index.php" ?>">Início</a></li>
+            <li><a href="<?php echo $siteurl ?>index.php">Início</a></li>
             <li><a href="#universidades">Universidades</a></li>
             <li><a href="#videos">Vídeos</a></li>
             <li><a href="#professores">Professores</a></li>
@@ -78,7 +78,7 @@ function verifyLike($id) {
           </ul>
         </nav>
 
-        <a href="<?php echo $siteurl ?>"><h1 class="logo header__logo">Qodra.</h1></a>
+        <a href="<?php echo $siteurl ?>index.php"><h1 class="logo header__logo">Qodra.</h1></a>
         
         <div class="account">
 <?php
@@ -107,7 +107,7 @@ function verifyLike($id) {
 			  <h2>".$_SESSION['user_name']."</h2>
 			  	<div class=\"account__actions\">
               <a href=\"".$siteurl."editar-conta.php\">Minha conta</a>
-			  	<a href=\"".$siteurl."?action=logout\">Sair</a>
+			  	<a href=\"".$siteurl."index.php?action=logout\">Sair</a>
 			  	</div>";
 			  }
 ?>
