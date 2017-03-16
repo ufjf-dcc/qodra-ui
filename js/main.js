@@ -16,6 +16,15 @@ function showMenuFixed(){
   }
 }
 
+function exibeLogin(){
+  $('#loginbox').toggle();
+}
+
+function exibeLoginUp(){
+  $('html,body').animate({scrollTop: $("#static-header").offset().top},'slow');
+  $('#loginbox').show();
+}
+
 showMenuFixed();
 
 $(window).scroll(function() {
@@ -30,4 +39,8 @@ $('#show-menu-inst, #menu-inst-menu').mouseenter(function(){
   $('#menu-inst').addClass('open');
 }).mouseleave(function(){
   $('#menu-inst').removeClass('open');
+});
+$('#show-login-inst').click(function(){
+  $('#login-inst').toggleClass('open');
+  return false;
 });
