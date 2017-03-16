@@ -1,5 +1,5 @@
 <?php 
-	include "include/inicial.php";
+	include "include/inicialNEW.php";
 function countLikes($video_link) {
 	$sql = mysql_query("select id from tbl_videos where video = '".$video_link."' limit 1");
 	$id = mysql_fetch_object($sql);
@@ -25,18 +25,18 @@ function verifyLike($id) {
 ?>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
 <script src="js/login.js"></script>
-<header class="header static">
+<header id="static-header" class="header static">
           <div class="wrap">
     <nav class="header__menu">
               <ul>
-        <li><a href="<?php echo $siteurl ?>">Início</a></li>
+        <li><a href="<?php echo $siteurl ?>index.php">Início</a></li>
         <li><a href="#universidades">Universidades</a></li>
         <li><a href="#videos">Vídeos</a></li>
         <li><a href="#professores">Professores</a></li>
         <li><a href="#sobre">Sobre</a></li>
       </ul>
             </nav>
-        <a href="<?php echo $siteurl ?>"><h1 class="logo header__logo">Qodra.</h1></a>
+        <a href="<?php echo $siteurl ?>/index.php"><h1 class="logo header__logo">Qodra.</h1></a>
     <div class="account">
 <?php 
 if (!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])) {
@@ -63,7 +63,7 @@ if (!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])) {
             <h2>".$_SESSION['user_name']."</h2>
             <div class=\"account__actions\">
               <a href=\"".$siteurl."editar-conta.php\">Minha conta</a>
-              <a href=\"".$siteurl."?action=logout\">Sair</a>
+              <a href=\"".$siteurl."index.php?action=logout\">Sair</a>
             </div>";
 ?>
 </div>
@@ -88,22 +88,22 @@ if (!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])) {
               <h1 class="title-main">Vídeos em destaque</h1>
               <div class="videos__slider krakatoa">
         <?php for ($x = 0; $x <= 8; $x++) {
-					$sql = mysql_query("select id from tbl_videos where video = '".$links[$x]."' limit 1");
+					$sql = mysql_query("select id from tbl_videos where video = '".$Dlinks[$x]."' limit 1");
 					$id = mysql_fetch_object($sql);
 			  		echo "<article>
             		<span class='videos__fav icon-star-black'></span>
-              		<video poster='fake-content/video-poster.jpg' autoplay loop controls tabindex='0'></video>
-              		<a class=\"videos__title\" href=\"detalhe-video.php?v=" . $links[$x] . "\">" . $titulos[$x]. "</a>
+              		<video poster='geraImagem.php?action=".$Dlinks[$x]."' width='340px' height='180px' autoplay loop controls tabindex='0'></video>
+              		<a class=\"videos__title\" href=\"detalhe-video.php?v=" . $Dlinks[$x] . "\">" . $Dtitulos[$x]. "</a>
               		<a class=\"videos__like fnc_".$id->id."\""; 
 					if(isset($_SESSION['user_id'])) {
 						if (verifyLike($id->id) == '') {
-							echo " onClick=\"likeVideo(".$id->id.",".countLikes($links[$x]).")\"";
+							echo " onClick=\"likeVideo(".$id->id.",".countLikes($Dlinks[$x]).")\"";
 						} else {
-							echo " onClick=\"undoLike(".$id->id.",".countLikes($links[$x]).")\"";
+							echo " onClick=\"undoLike(".$id->id.",".countLikes($Dlinks[$x]).")\"";
 						}
 					}
-					echo "><span class='icon-like-white".verifyLike($id->id)." like_".$id->id."'></span> <span class='link-icon__text count_like_".$id->id."'>".countLikes($links[$x])."</span></a>
-     			    <a class=\"videos__like\" href='detalhe-video.php?v=" . $links[$x] . "#comentar' class='link-icon'><span class='icon-comment-white'></span> <span class='link-icon__text'>".countCommentaries($links[$x])."</span></a>
+					echo "><span class='icon-like-white".verifyLike($id->id)." like_".$id->id."'></span> <span class='link-icon__text count_like_".$id->id."'>".countLikes($Dlinks[$x])."</span></a>
+     			    <a class=\"videos__like\" href='detalhe-video.php?v=" . $Dlinks[$x] . "#comentar' class='link-icon'><span class='icon-comment-white'></span> <span class='link-icon__text'>".countCommentaries($Dlinks[$x])."</span></a>
             		</article>";
 		  		}
 		?>
@@ -113,22 +113,22 @@ if (!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])) {
               <h1 class="title-main">Principais vídeos</h1>
               <div class="videos__slider krakatoa">
         <?php for ($x = 0; $x <= 8; $x++) {
-					$sql = mysql_query("select id from tbl_videos where video = '".$links[$x]."' limit 1");
+					$sql = mysql_query("select id from tbl_videos where video = '".$Dlinks[$x]."' limit 1");
 					$id = mysql_fetch_object($sql);
 			  		echo "<article>
             		<span class='videos__fav icon-star-black'></span>
-              		<video poster='fake-content/video-poster.jpg' autoplay loop controls tabindex='0'></video>
-              		<a class=\"videos__title\" href=\"detalhe-video.php?v=" . $links[$x] . "\">" . $titulos[$x]. "</a>
+              		<video poster='geraImagem.php?action=".$Dlinks[$x]."' width='340px' height='180px' autoplay loop controls tabindex='0'></video>
+              		<a class=\"videos__title\" href=\"detalhe-video.php?v=" . $Dlinks[$x] . "\">" . $Dtitulos[$x]. "</a>
               		<a class=\"videos__like fnc_".$id->id."\""; 
 					if(isset($_SESSION['user_id'])) {
 						if (verifyLike($id->id) == '') {
-							echo " onClick=\"likeVideo(".$id->id.",".countLikes($links[$x]).")\"";
+							echo " onClick=\"likeVideo(".$id->id.",".countLikes($Dlinks[$x]).")\"";
 						} else {
-							echo " onClick=\"undoLike(".$id->id.",".countLikes($links[$x]).")\"";
+							echo " onClick=\"undoLike(".$id->id.",".countLikes($Dlinks[$x]).")\"";
 						}
 					}
-					echo "class='link-icon'><span class='icon-like-white".verifyLike($id->id)." like_".$id->id."'></span> <span class='link-icon__text count_like_".$id->id."'>".countLikes($links[$x])."</span></a>
-     			    <a class=\"videos__like\" href='detalhe-video.php?v=" . $links[$x] . "#comentar' class='link-icon'><span class='icon-comment-white'></span> <span class='link-icon__text'>".countCommentaries($links[$x])."</span></a>
+					echo "class='link-icon'><span class='icon-like-white".verifyLike($id->id)." like_".$id->id."'></span> <span class='link-icon__text count_like_".$id->id."'>".countLikes($Dlinks[$x])."</span></a>
+     			    <a class=\"videos__like\" href='detalhe-video.php?v=" . $Dlinks[$x] . "#comentar' class='link-icon'><span class='icon-comment-white'></span> <span class='link-icon__text'>".countCommentaries($Dlinks[$x])."</span></a>
             		</article>";
 		  		}
 		?>
@@ -141,55 +141,19 @@ if (!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])) {
             <h1>Principais categorias</h1>
             <a href="#ver-todas">Ver todas</a> </div>
                   <div class="categorie-list">
-            <h2 class="categorie-list__title">Ciências Naturais</h2>
             <ul class="categorie-list__list">
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                    </ul>
+                <?php
+                    for( $i=0; $i<10; $i++){
+                      echo'
+                        <li><a href="'.$siteurl.'lista-video.php?busca='.$principaisCategorias[$i].'" method="get" >'.$principaisCategorias[$i].'</a> <span>'.$principaisCategoriasQtd[$i].'</span></li>
+                      ';
+
+                    }
+
+                ?>
+            </ul>
           </div>
-                  <div class="categorie-list">
-            <h2 class="categorie-list__title">Ciências Naturais</h2>
-            <ul class="categorie-list__list">
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                    </ul>
-          </div>
-                  <div class="categorie-list">
-            <h2 class="categorie-list__title">Ciências Naturais</h2>
-            <ul class="categorie-list__list">
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                    </ul>
-          </div>
-                  <div class="categorie-list">
-            <h2 class="categorie-list__title">Ciências Naturais</h2>
-            <ul class="categorie-list__list">
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                    </ul>
-          </div>
-                  <div class="categorie-list">
-            <h2 class="categorie-list__title">Ciências Naturais</h2>
-            <ul class="categorie-list__list">
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                      <li><a href="#">Astronomia</a> <span>7 vídeos</span></li>
-                    </ul>
-          </div>
+
                 </section>
       </div>
               <div class="column-4-12">
@@ -200,9 +164,8 @@ if (!isset($_SESSION['login_user']) || empty($_SESSION['login_user'])) {
                   <ul class="main-tags__list">
             <?php 
 				for ($x = 0; $x <= 7; $x++) {
-			  		echo "<li class=\"main-tags__tag". ($x+1) ."\"><a href=\"lista-video.php?busca=" . $tagsmaisusadas[$x] . "\">" . $tagsmaisusadas[$x] . "</a> <span>" . $tagsmaisusadasquant[$x] . " vídeos</span></li>";
-		  		}
-		  ; 
+                    echo "<li class=\"main-tags__tag" . ($x + 1) . "\"><a href=\"lista-video.php?busca=" . $Dtagsmaisusadas[$x] . "\">" . $Dtagsmaisusadas[$x] . "</a> <span>" . $Dtagsmaisusadasquant[$x] . " vídeos</span></li>";
+                }
 			?>
           </ul>
                 </section>

@@ -4,7 +4,7 @@ include "include/db.php";
 if (isset($_GET["action"])) {
 	if ($_GET["action"] == 'logout') {
 		session_destroy();
-		header('Location: ' . $siteurl);
+		header('Location: ' . $siteurl."index.php");
 	}
 }
 ?>
@@ -19,9 +19,11 @@ if (isset($_GET["action"])) {
 <link href="favicon.png" rel="shortcut icon">
 <link rel="stylesheet" href="css/reset.css">
 <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <link rel="stylesheet" href="css/qodra-icons.css">
 <link rel="stylesheet" href="css/main.css">
+	<script src="js/login.js"></script>
+
 </head>
 <body>
 <?php
